@@ -1,25 +1,47 @@
 <script setup>
+	import { reactive } from 'vue'
 
+	const dados = reactive({
+        num1: 0,
+        num2: 0,
+        operacao: '+',
+	})
+
+	function calcularResultado() {
+        switch (dados.operacao) {
+            case '+':
+            return dados.num1 + dados.num2
+            case '-':
+            return dados.num1 - dados.num2
+            case '*':
+            return dados.num1 * dados.num2
+            case '/':
+            return dados.num2 === 0 ? 'Erro: divisão por zero' : (dados.num1 / dados.num2).toFixed(2)
+            default:
+            return 0
+        }
+	}
 </script>
 
 <template>
     <div class="container">
         <h1>Calculadora Aritmética</h1>
+
         <div class="input-group">
-            <input type="number" placeholder="Digite o primeiro número"/>
-            <input type="number" placeholder="Digite o segundo número"/>
+        <input type="number" v-model.number="dados.num1" placeholder="Digite o primeiro número"/>
+        <input type="number" v-model.number="dados.num2" placeholder="Digite o segundo número"/>
         </div>
 
-        <select name="" class="select">
-            <option value="+">Soma (+)</option>
-            <option value="-">Subtração (−)</option>
-            <option value="*">Multiplicação (×)</option>
-            <option value="/">Divisão (÷)</option>
+        <select v-model="dados.operacao" class="select">
+        <option value="+">Soma (+)</option>
+        <option value="-">Subtração (−)</option>
+        <option value="*">Multiplicação (×)</option>
+        <option value="/">Divisão (÷)</option>
         </select>
 
         <div class="resultado">
-            <p>Resultado</p>
-            <h2>{{  }}</h2>
+        <p>Resultado:</p>
+        <h2>{{ calcularResultado() }}</h2>
         </div>
     </div>
 </template>
